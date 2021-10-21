@@ -1,6 +1,6 @@
 "use strict";
 
-const Base = require("./Base");
+const Base = require("./BaseIndexes");
 const Util = require("../util/Util");
 
 const properties = require("../properties/util/pagination");
@@ -72,7 +72,8 @@ class PaginationSearch extends Base {
     }
 
     /**
-     * @typedef {Base.stringify}
+     * @description Converts the instance into a string format
+     * @returns {string}
      */
 
     stringify() {
