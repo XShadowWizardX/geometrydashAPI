@@ -34,6 +34,13 @@ class Difficulty {
 
         /**
          * @description The ratio of the numerator over the denominator
+         * * `-1` - Auto
+         * * `0` - NA
+         * * `1` - Easy / Easy Demon
+         * * `2` - Normal / Medium Demon
+         * * `3` - Hard / Hard Demon
+         * * `4` - Harder / Insane Demon
+         * * `5` - Insane / Extreme Demon
          * @type {RATIO}
          */
 
@@ -69,25 +76,38 @@ class Difficulty {
     }
 
     /**
-     * @returns {boolean} Whether the level has "isAuto" enabled
+     * @type {boolean} Whether the level has "isAuto" enabled
      */
 
     get isRatedAuto() { return this.isAuto; }
-
+    set isRatedAuto(value) {
+        if (value) {
+            this.build();
+            this.ratio = -1;
+            this.isAuto = true;
+        }
+    }
      /**
-      * @returns {boolean} Whether the level has "isDemon" enabled
+      * @type {boolean} Whether the level has "isDemon" enabled
       */
  
     get isRatedDemon() { return this.isDemon; }
- 
+    set isRatedDemon(value) {
+        if (value) {
+            this.build();
+            this.ratio = 3;
+            this.isDemon = true;
+            this.demonType = 0;
+        }
+    }
      /**
-      * @returns {boolean} Whether the level is rated auto or demon
+      * @type {boolean} Whether the level is rated auto or demon
       */
  
     get hasRatingSpecial() { return this.isRatedAuto || this.isRatedDemon; }
 
     /**
-     * @returns {boolean} Whether the level has a specific rating
+     * @type {boolean} Whether the level has a specific rating
      */
 
     get hasRatingDefined() {
@@ -100,67 +120,144 @@ class Difficulty {
     }
 
     /**
-     * @returns {boolean} Whether the level is rated "easy"
+     * @type {boolean} Whether the level is rated "easy"
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isRatedEasy() { return !this.hasRatingSpecial && this.ratio === 1; }
+    set isRatedEasy(value) {
+        if (value) {
+            this.build();
+            this.ratio = 1;
+        }
+    }
 
     /**
-     * @returns {boolean} Whether the level is rated "normal"
+     * @type {boolean} Whether the level is rated "normal"
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isRatedNormal() { return !this.hasRatingSpecial && this.ratio === 2; }
+    set isRatedNormal(value) {
+        if (value) {
+            this.build();
+            this.ratio = 2;
+        }
+    }
 
     /**
-     * @returns {boolean} Whether the level is rated "hard"
+     * @type {boolean} Whether the level is rated "hard"
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isRatedHard() { return !this.hasRatingSpecial && this.ratio === 3; }
+    set isRatedHard(value) {
+        if (value) {
+            this.build();
+            this.ratio = 3;
+        }
+    }
 
     /**
-     * @returns {boolean} Whether the level is rated "harder"
+     * @type {boolean} Whether the level is rated "harder"
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isRatedHarder() { return !this.hasRatingSpecial && this.ratio === 4; }
+    set isRatedHarder(value) {
+        if (value) {
+            this.build();
+            this.ratio = 4;
+        }
+    }
 
     /**
-     * @returns {boolean} Whether the level is rated "insane"
+     * @type {boolean} Whether the level is rated "insane"
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isRatedInsane() { return !this.hasRatingSpecial && this.ratio === 5; }
+    set isRatedInsane(value) {
+        if (value) {
+            this.build();
+            this.ratio = 5;
+        }
+    }
 
     /**
-     * @returns {boolean} Whether the level is rated "easy demon"
+     * @type {boolean} Whether the level is rated "easy demon"
+     * @param {boolean} value Whether to set to this difficulty
      */
     
     get isRatedDemonEasy() { return this.isRatedDemon && this.demonType === 3; }
+    set isRatedDemonEasy(value) {
+        if (value) {
+            this.build();
+            this.ratio = 1;
+            this.isDemon = true;
+            this.demonType = 3;
+        }
+    }
 
     /**
-     * @returns {boolean} Whether the level is rated "medium demon"
+     * @type {boolean} Whether the level is rated "medium demon"
+     * @param {boolean} value Whether to set to this difficulty
      */
     
     get isRatedDemonMedium() { return this.isRatedDemon && this.demonType === 4; }
-
+    set isRatedDemonMedium(value) {
+        if (value) {
+            this.build();
+            this.ratio = 2;
+            this.isDemon = true;
+            this.demonType = 4;
+        }
+    }
     /**
-     * @returns {boolean} Whether the level is rated "hard demon"
+     * @type {boolean} Whether the level is rated "hard demon"
+     * @param {boolean} value Whether to set to this difficulty
      */
     
     get isRatedDemonHard() { return this.isRatedDemon && this.demonType === 0; }
-
+    set isRatedDemonHard(value) {
+        if (value) {
+            this.build();
+            this.ratio = 3;
+            this.isDemon = true;
+            this.demonType = 0;
+        }
+    }
     /**
-     * @returns {boolean} Whether the level is rated "insane demon"
+     * @type {boolean} Whether the level is rated "insane demon"
+     * @param {boolean} value Whether to set to this difficulty
      */
     
     get isRatedDemonInsane() { return this.isRatedDemon && this.demonType === 5; }
-
+    set isRatedDemonInsane(value) {
+        if (value) {
+            this.build();
+            this.ratio = 4;
+            this.isDemon = true;
+            this.demonType = 5;
+        }
+    }
     /**
-     * @returns {boolean} Whether the level is rated "extreme demon"
+     * @type {boolean} Whether the level is rated "extreme demon"
+     * @param {boolean} value Whether to set to this difficulty
      */
     
     get isRatedDemonExtreme() { return this.isRatedDemon && this.demonType === 6; }
-
+    set isRatedDemonExtreme(value) {
+        if (value) {
+            this.build();
+            this.ratio = 5;
+            this.isDemon = true;
+            this.demonType = 6;
+        }
+    }
     /**
-     * @returns {boolean} Whether the level has no specific rating / unrated
+     * @type {boolean} Whether the level has no specific rating / unrated
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isUnrated() { return !this.hasRatingDefined; }
