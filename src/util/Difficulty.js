@@ -77,6 +77,7 @@ class Difficulty {
 
     /**
      * @type {boolean} Whether the level has "isAuto" enabled
+     * @param {boolean} value Whether to set to this difficulty
      */
 
     get isRatedAuto() { return this.isAuto; }
@@ -87,8 +88,10 @@ class Difficulty {
             this.isAuto = true;
         }
     }
+    
      /**
       * @type {boolean} Whether the level has "isDemon" enabled
+      * @param {boolean} value Whether to set to this difficulty
       */
  
     get isRatedDemon() { return this.isDemon; }
