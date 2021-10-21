@@ -11,6 +11,8 @@ const {
 
 /**
  * @typedef {Object} DIFFICULTY_OPTIONS
+ * @property {number} numerator (OPTIONAL) The numerator to make the ratio
+ * @property {number} denominator (OPTIONAL) The denominator to make the ratio
  * @property {number} ratio The ratio of the numerator over the denominator
  * @property {number} isDemon Whether the difficulty is set to demon
  * @property {number} isAuto Whether the difficulty is set to auto
