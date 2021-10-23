@@ -27,7 +27,21 @@ class BaseIndexes extends Base {
 
     patch() { return this; }
 
-    parse() { return this; }
+    parse(value, {
+        separatorValue = this.constructor.PROPERTIES_VALUE_SEPARATOR,
+        separator = this.constructor.PROPERTIES_SEPARATOR
+    }={}) {
+        if (value instanceof BaseIndexes) {
+            this.parse(value.stringify())
+        } else if (typeof value === "string") {
+            value = Util.group(2, ...value.split(separator).reduce((res, a) => {
+                res.push(...a.split(separatorValue));
+                return res;
+            }, []));
+            this.parse(Object.fromEntries(value));
+        }
+        return this;
+    }
 
     /**
      * @description Converts the instance into a string format
@@ -39,15 +53,14 @@ class BaseIndexes extends Base {
 
     stringify({
         separatorValue = this.constructor.PROPERTIES_VALUE_SEPARATOR,
-        separator = this.constructor.PROPERTIES_SEPARATOR
+        separator = this.constructor.PROPERTIES_SEPARATOR,
+        props = this.constructor.PROPERTIES
     }={}) {
-        return Object.entries(this._indexes).reduce((res, [id, v]) => {
-            if (this.constructor.PROPERTIES && id in this.constructor.PROPERTIES) {
-                if (Util.isObjectNormal(v) && "stringify" in v)
-                    v.push([id, v.stringify()]);
-                else
-                    v.push([id, `${typeof v === "boolean" ? v ? 1 : 0 : v}`]);
-            }
+        return Object.entries(Util.flatten(this._indexes)).reduce((res, [id, v]) => {
+            if (Util.isObjectNormal(v) && "stringify" in v)
+                res.push([id, v.stringify()]);
+            else
+                res.push([id, `${typeof v === "boolean" ? v ? 1 : 0 : v}`]);
             return res;
         }, []).map(a => a.join(separatorValue)).join(separator);
     }
