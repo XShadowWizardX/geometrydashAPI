@@ -6,6 +6,51 @@ const Color = require("./Color");
 class Util {}
 
 /**
+ * @description Sums up all of the entries. Converts to
+ * BigInt if at least one BigInt entry exists
+ * @param  {...any} entries 
+ * @returns {number|BigInt} The sum
+ */
+
+Util.sum = function(...entries) {
+    let res = 0n;
+    switch (entries.reduce((v, a) => {
+        res += typeof a === "bigint"
+        ? (v = true, a)
+        : BigInt(a);
+        return v;
+    }, false)) {
+        case false: return Number(res);
+        default: return res;
+    };
+}
+
+/**
+ * @description Multiplies all of the entries. Converts to
+ * BigInt if at least one BigInt entry exists, rounding
+ * decimals.
+ * @param  {...any} entries 
+ * @returns {number|BigInt} The product
+ */
+
+Util.product = function(...entries) {
+    let res = 1;
+    let resBigInt = 1n;
+    switch (entries.reduce((v, a) => {
+        res *= typeof a === "bigint"
+        ? (v = true, Number(a))
+        : Number(a);
+        resBigInt *= typeof a === "bigint"
+        ? (v = true, a)
+        : BigInt(Math.round(Number(a)));
+        return v;
+    }, false)) {
+        case true: return resBigInt;
+        default: return res;
+    };
+}
+
+/**
  * @description Takes a list of entries and divides them into array groups
  * @param {number|number[]} n The number of entries per group
  * @param {...*} entries The entries to divide into groups
