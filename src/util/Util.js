@@ -1,6 +1,7 @@
 "use strict";
 
 const BitField = require("./BitField");
+const Color = require("./Color");
 
 class Util {}
 
@@ -34,6 +35,54 @@ Util.group = function(n, ...entries) {
         dataIndex: 0,
         data: []
     }).data;
+}
+
+/**
+ * @description Converts milisecond timestamp into a different unit
+ * @param {string|number|bigint} value string timestamp or time in miliseconds
+ * @param {"MILISECONDS"|"SECONDS"|"MINUTES"|"HOURS"|"DAYS"|"MONTHS"|"YEARS"} [resUnit="MILISECONDS"] in miliseconds by default
+ * @returns {number} Elasped time
+ */
+
+Util.milisecondsToUnit = function(value, resUnit="MILISECONDS") {
+    value = /^-?\d{1,}$/.test(value) ? Number(value) : 0;
+    switch (resUnit) {
+        case "YEARS": value /= 12;
+        case "MONTHS": value /= 29.75;
+        case "DAYS": value /= 24;
+        case "HOURS": value /= 60;
+        case "MINUTES": value /= 60;
+        case "SECONDS": value /= 1000;
+        case "MILISECONDS": return value;
+        default: return value;
+    }
+}/**
+ * @description Converts a GD string timestamp ("# days") into a number
+ * representing the elasped time in the selected unit
+ * @param {string} Elasped time
+ * @param {"MILISECONDS"|"SECONDS"|"MINUTES"|"HOURS"|"DAYS"|"MONTHS"|"YEARS"} [resUnit="MILISECONDS"] in miliseconds by default
+ * @returns {number} Elasped time
+ */
+
+Util.timestampStringToNumber = function(str, resUnit="MILISECONDS") {
+    let res = 0;
+    if (typeof str === "string") {
+        if (/\d{1,} ?years?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0) * 12 * 29.75 * 24 * 60 * 60 * 1000;
+        if (/\d{1,} ?months?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0) * 29.75 * 24 * 60 * 60 * 1000;
+        if (/\d{1,} ?days?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0) * 24 * 60 * 60 * 1000;
+        if (/\d{1,} ?hours?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0) * 60 * 60 * 1000;
+        if (/\d{1,} ?minutes?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0) * 60 * 1000;
+        if (/\d{1,} ?seconds?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0) * 1000;
+        if (/\d{1,} ?miliseconds?/i.test(str))
+            res += (Number(str.match(/\d{1,}/)[0]) || 0);
+    }
+    return Util.milisecondsToUnit(res, resUnit);
 }
 
 /**
@@ -77,7 +126,9 @@ Util.flatten = function(obj) {
     for(let [k, v] of Object.entries(obj)) {
         if (!v) continue;
         
-        if (v instanceof BitField)
+        if (v instanceof Color)
+            res[k] = v.rgb.join(",");
+        else if (v instanceof BitField)
             res[k] = v.value;
         else if (typeof v === "bigint")
             res[k] = `${v}`;
