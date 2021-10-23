@@ -71,7 +71,7 @@ class Difficulty {
          * @type {number}
          */
 
-        this.demonType = "demonType" in data ? data.demonType : 0;
+        this.demonType = 0;
 
     }
 
