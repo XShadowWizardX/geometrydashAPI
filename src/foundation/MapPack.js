@@ -267,15 +267,15 @@ class MapPack extends Base {
             Object.entries(data).forEach(([k, v]) => {
 
                 if (/^(1|(pack)?ID)$/i.test(k)) this.packID = v;
-                if (/^(2|name)$/i.test(k)) this.name = v;
-                if (/^(3|levels?|levelID)$/i.test(k)) this.levels = v;
-                if (k == "4" || STARS_REGEX.test(k)) this.stars = v;
-                if (k == "5" || SCOINS_REGEX.test(k)) this.scoins = v;
-                if (/^(6|difficultyFace)$/i.test(k)) this.difficultyFace = v;
-                if (/^(7|nameColor)$/i.test(k)) this.nameColor = v;
-                if (/^(8|progressColor)$/i.test(k)) this.progressColor = v;
+                else if (/^(2|name)$/i.test(k)) this.name = v;
+                else if (/^(3|levels?|levelID)$/i.test(k)) this.levels = v;
+                else if (k == "4" || STARS_REGEX.test(k)) this.stars = v;
+                else if (k == "5" || SCOINS_REGEX.test(k)) this.scoins = v;
+                else if (/^(6|difficultyFace)$/i.test(k)) this.difficultyFace = v;
+                else if (/^(7|nameColor)$/i.test(k)) this.nameColor = v;
+                else if (/^(8|progressColor)$/i.test(k)) this.progressColor = v;
 
-                if (/^(difficulty)$/i.test(k)) this.difficulty = v;
+                else if (/^(difficulty)$/i.test(k)) this.difficulty = v;
 
             });
         }
