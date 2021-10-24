@@ -3,7 +3,7 @@
 const Base = require("./BaseIndexes");
 const Util = require("../util/Util");
 
-const properties = require("../properties/util/pagination");
+const properties = require("../properties/util/PaginationSearch");
 const {
     TOTAL,
     PAGE,
@@ -98,9 +98,9 @@ class PaginationSearch extends Base {
             ] = data.split(":");
         } else if (Util.isObjectNormal(data)) {
             Object.entries(data).forEach(([k, v]) => {
-                if (/^total$/i.test(k)) this.total = v;
-                if (/^page$/i.test(k)) this.page = v;
-                if (/^perPage$/i.test(k)) this.perPage = v;
+                if (/^(total)$/i.test(k)) this.total = v;
+                else if (/^(page)$/i.test(k)) this.page = v;
+                else if (/^(perPage)$/i.test(k)) this.perPage = v;
             });
         }
 
