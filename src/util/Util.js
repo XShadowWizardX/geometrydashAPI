@@ -169,7 +169,7 @@ Util.flatten = function(obj) {
     const res = {};
 
     for(let [k, v] of Object.entries(obj)) {
-        if (!v) continue;
+        if (v === null) continue;
         
         if (v instanceof Color)
             res[k] = v.rgb.join(",");
