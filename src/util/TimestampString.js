@@ -137,7 +137,7 @@ TimestampString.toNumber = function(str, resUnit="MILISECONDS") {
         if (REGEX_MILISECONDS.test(str))
             res += (Number(str.match(/\d{1,}/)[0]) || 0);
     }
-return Util.milisecondsToUnit(res, resUnit);
+    return Util.milisecondsToUnit(res, resUnit);
 }
 
 module.exports = TimestampString;
