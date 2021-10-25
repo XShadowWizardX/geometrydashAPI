@@ -67,7 +67,6 @@ class EndpointBase extends Map {
             this.set("gameVersion", value && /^-?\d{1,}$/.test(value) ? Number(value) : null);
     }
 
-
     /**
      * @description The binary version of the game
      * @param {?BigInt|number|string} value
@@ -82,7 +81,6 @@ class EndpointBase extends Map {
             this.set("binaryVersion", value && /^-?\d{1,}$/.test(value) ? Number(value) : null);
     }
 
-
     /**
      * @description Whether to get Geometry Dash World results
      * @param {?BigInt|number|string} value
@@ -96,7 +94,6 @@ class EndpointBase extends Map {
         else
             this.set("gdw", VALID_REGEX.test(value));
     }
-
 
     /**
      * @description Endpoint password
