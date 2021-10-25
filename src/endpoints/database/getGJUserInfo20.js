@@ -3,6 +3,7 @@
 const Base = require("../Base");
 
 /**
+ * @description Gets a user's GD Profile
  * @extends {Base}
  */
 
