@@ -10,10 +10,23 @@ const Base = require("../Base");
 class getGJUserInfo20Endpoint extends Base {
 
     /**
-     * @inheritdoc
+     * @description The API URL path
+     * @type {string}
      */
 
     get _path() { return __filename.substr(Base.PATH_BASE.length).replace(/\..{1,}$/, ".php"); }
+
+    /**
+     * @description Whether the current parameters will likely produce a
+     * failed request
+     * @returns {boolean}
+     */
+
+    isFaulty() {
+        return !(this.targetAccountID > 0)
+        || this.secret == null
+        || super.isFaulty();
+    }
 
 
     /**
@@ -23,7 +36,7 @@ class getGJUserInfo20Endpoint extends Base {
      * @type {?BigInt}
      */
 
-    get targetAccountID() { return this.get("targetAccountID"); }
+    get targetAccountID() { return BigInt(this.get("targetAccountID") || 0); }
     set targetAccountID(value) {
         if (value === undefined)
             this.delete("targetAccountID");
@@ -32,13 +45,13 @@ class getGJUserInfo20Endpoint extends Base {
     }
 
     /**
-     * @description The accountID of the user that's searching (use alongside gjp and used to check
+     * @description The accountID of the user that's searching (used alongside gjp and used to check
      * whether the loader is blocked by the looked up user)
      * @param {?BigInt|number|string} value
      * @type {?BigInt}
      */
 
-    get accountID() { return this.get("accountID"); }
+    get accountID() { return BigInt(this.get("accountID") || 0); }
     set accountID(value) {
         if (value === undefined)
             this.delete("accountID");
@@ -48,11 +61,11 @@ class getGJUserInfo20Endpoint extends Base {
 
     /**
      * @description The loader's account password
-     * @param {?BigInt|number|string} value
+     * @param {?BigInt|number/|string} value
      * @type {?Number}
      */
 
-    get gjp() { return this.get("gjp"); }
+    get gjp() { return this.get("gjp") || null; }
     set gjp(value) {
         if (value === undefined)
             this.delete("gjp");
